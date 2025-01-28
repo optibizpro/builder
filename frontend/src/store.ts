@@ -95,7 +95,7 @@ const useStore = defineStore("store", {
 			"Advanced",
 		] as BlockTemplate["category"][],
 		isDragging: false,
-		dragTarget: {
+		dropTarget: {
 			x: <number | null>null,
 			y: <number | null>null,
 			placeholder: <HTMLElement | null>null,
@@ -587,7 +587,7 @@ const useStore = defineStore("store", {
 		},
 		handleDragEnd() {
 			this.removeDropPlaceholder();
-			this.dragTarget = {
+			this.dropTarget = {
 				x: null,
 				y: null,
 				placeholder: null,
@@ -604,9 +604,9 @@ const useStore = defineStore("store", {
 
 			const root = document.querySelector(".__builder_component__[data-block-id='root']");
 			if (root) {
-				this.dragTarget.placeholder = root.appendChild(element);
+				this.dropTarget.placeholder = root.appendChild(element);
 			}
-			return this.dragTarget.placeholder;
+			return this.dropTarget.placeholder;
 		},
 		removeDropPlaceholder() {
 			const placeholder = document.getElementById("placeholder")
