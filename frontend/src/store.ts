@@ -95,6 +95,7 @@ const useStore = defineStore("store", {
 			"Advanced",
 		] as BlockTemplate["category"][],
 		isDragging: false,
+		isDropping: false,
 		dropTarget: {
 			x: <number | null>null,
 			y: <number | null>null,
@@ -586,6 +587,12 @@ const useStore = defineStore("store", {
 			}
 		},
 		handleDragEnd() {
+			// check flag to avoid race condition with async onDrop
+			if (!this.isDropping) {
+				this.resetDropTarget();
+			}
+		},
+		resetDropTarget() {
 			this.removeDropPlaceholder();
 			this.dropTarget = {
 				x: null,
@@ -595,6 +602,7 @@ const useStore = defineStore("store", {
 				index: null,
 			}
 			this.isDragging = false
+			this.isDropping = false
 		},
 		insertDropPlaceholder() {
 			// append placeholder component to the dom directly
