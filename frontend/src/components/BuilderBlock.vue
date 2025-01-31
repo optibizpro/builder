@@ -37,6 +37,7 @@ import Block from "@/utils/block";
 import { setFont } from "@/utils/fontManager";
 import { computed, inject, nextTick, onMounted, reactive, ref, useAttrs, watch, watchEffect } from "vue";
 
+import FormHandler from "@/components/FormHandler.vue";
 import { getDataForKey } from "@/utils/helpers";
 import { useDraggableBlock } from "@/utils/useDraggableBlock";
 import useStore from "../store";
@@ -93,6 +94,8 @@ const getComponentName = (block: Block) => {
 		return TextBlock;
 	} else if (block.isHTML()) {
 		return BlockHTML;
+	} else if (block.isForm()) {
+		return FormHandler;
 	} else {
 		return block.getTag();
 	}
@@ -109,6 +112,7 @@ const attributes = computed(() => {
 		props.block.isHTML() ||
 		props.block.isLink() ||
 		props.block.isButton() ||
+		props.block.isForm() ||
 		props.block.isRepeater()
 	) {
 		attribs.block = props.block;
